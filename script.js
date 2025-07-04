@@ -3,6 +3,36 @@ const countries = [
   "UK", "France", "Romania", "Germany", "Spain", "Netherlands", "Czechia", "Egypt", "Morocco"
 ];
 
+// Budget data injected from budgets.csv
+const athleteBudgets = {
+  "Jude Bellingham": 1.5,
+  "Bukayo Saka": 0.8,
+  "Jamal Musiala": 1.5,
+  "Omar Marmoush": 0.5,
+  "Achraf Hakimi": 0.8,
+  "Virgil Van Dijk": 1.2,
+  "Aitana Bonmati": 0.5,
+  "Salma Paralluelo": 0.3,
+  "Alexia Putellas": 0.3,
+  "Carlos Alcaraz": 2.5,
+  "Alex Zverev": 0.5,
+  "Ons Jabeur": 0.5,
+  "Marketa Vondrousova": 0.5,
+  "Lando Norris": 1.5,
+  "Charles Leclerc": 1.5,
+  "Carlos Sainz": 1.0,
+  "Pierre Gasly": 0.8,
+  "Marc Marquez": 0.6,
+  "Victor Wembanyama": 3.0,
+  "Nikola Jokic": 2.0,
+  "Luka Doncic": 3.0,
+  "Mathieu Van Der Poel": 0.5,
+  "Remo Evenepoel": 0.3,
+  "Leon Marchand": 0.4,
+  "Alica Schmidt": 0.5,
+  "Femke Bol": 0.3
+};
+
 const athletes = [
   { name: "Jude Bellingham", data: [10.0, 3.8, 3.1, 9.8, 6.8, 5.6, 4.1, 2.1, 2.7], sport: "Football", gender: "Male", nationality: "United Kingdom", social: 42477775 },
   { name: "Bukayo Saka", data: [10.0, 2.0, 2.2, 2.0, 2.5, 2.4, 1.9, 1.9, 1.7], sport: "Football", gender: "Male", nationality: "United Kingdom", social: 13480403 },
@@ -31,7 +61,10 @@ const athletes = [
   { name: "Alica Schmidt", data: [1.3, 0.9, 0.7, 3.9, 1.1, 1.0, 1.6, 0.2, 0.6], sport: "Athletics", gender: "Female", nationality: "Germany", social: 8355717 },
   { name: "Femke Bol", data: [0.9, 0.5, 0.5, 0.6, 0.6, 3.8, 0.9, 0.2, 0.5], sport: "Athletics", gender: "Female", nationality: "Netherlands", social: 649187 }
 ];
-
+// Attach cost to each athlete
+athletes.forEach(a => {
+  a.cost = athleteBudgets[a.name] || 0;
+});
 // --- END DATA SECTION ---
 
 function getColor(index) {
@@ -151,6 +184,11 @@ function formatNumber(num) {
   return num.toLocaleString();
 }
 
+// Utility: format money (m = million euros)
+function formatMillionEuros(num) {
+  return "€" + num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "m";
+}
+
 // Summarize values by key for selected athletes
 function summarizeByKey(selectedIndices, key) {
   const summary = {};
@@ -164,6 +202,11 @@ function summarizeByKey(selectedIndices, key) {
 // Total global social following for selected athletes
 function totalSocial(selectedIndices) {
   return selectedIndices.reduce((sum, idx) => sum + athletes[idx].social, 0);
+}
+
+// Total cost for selected athletes
+function totalCost(selectedIndices) {
+  return selectedIndices.reduce((sum, idx) => sum + (athletes[idx].cost || 0), 0);
 }
 
 // Calculate cumulative country scores as per user spec (1 decimal place)
@@ -199,6 +242,7 @@ function updateSummary() {
   const genderSummary = summarizeByKey(selected, "gender");
   const nationalitySummary = summarizeByKey(selected, "nationality");
   const socialSum = totalSocial(selected);
+  const costSum = totalCost(selected);
 
   // Athlete count
   document.getElementById('athlete-count-number').textContent = selected.length;
@@ -220,6 +264,9 @@ function updateSummary() {
 
   // Social following total
   document.getElementById('social-following-number').textContent = formatNumber(socialSum);
+
+  // Cost total
+  document.getElementById('total-cost-number').textContent = formatMillionEuros(costSum);
 
   // Vertical country table
   let tableHtml = `<table class="country-score-table"><tr><th>Country</th><th>Cumulative Score</th></tr>`;
