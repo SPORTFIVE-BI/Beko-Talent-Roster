@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Beko Talent Roster Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Beko Talent Roster Analysis</h1>
+  <div id="main-container">
+    <div id="dashboard-row">
+      <div id="options-panel">
+        <h2>Select Athletes:</h2>
+        <div id="options-list"></div>
+      </div>
+      <div id="chart-panel">
+        <canvas id="radarChart" width="570" height="570"></canvas>
+      </div>
+      <div id="dashboard-panel">
+        <div class="dashboard-box small" id="athlete-count-box">
+          <div class="dashboard-number small" id="athlete-count-number">0</div>
+          <div class="dashboard-label small">Athletes Selected</div>
+        </div>
+        <div class="dashboard-box" id="sport-breakdown-box">
+          <div class="dashboard-number" id="sport-count-number">-</div>
+          <div class="dashboard-label">Sports Represented</div>
+          <div class="dashboard-context" id="sport-breakdown-context"></div>
+        </div>
+        <div class="dashboard-box" id="gender-breakdown-box">
+          <div class="dashboard-number" id="gender-count-number">-</div>
+          <div class="dashboard-label">Gender</div>
+          <div class="dashboard-context" id="gender-breakdown-context"></div>
+        </div>
+        <div class="dashboard-box" id="nationality-breakdown-box">
+          <div class="dashboard-number" id="nationality-count-number">-</div>
+          <div class="dashboard-label">Nationalities</div>
+          <div class="dashboard-context" id="nationality-breakdown-context"></div>
+        </div>
+        <div class="dashboard-box" id="social-following-box">
+          <div class="dashboard-number" id="social-following-number">0</div>
+          <div class="dashboard-label">Total Social Following</div>
+        </div>
+      </div>
+      <div id="country-table-panel">
+        <h2>Cumulative Country Score</h2>
+        <div id="country-table-container"></div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
